@@ -1,34 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TimeToMove 1.0
 
-## Getting Started
+Este projeto é a evolução do projeto Move.it que iniciei durante a realização do Next Level Week 4º realizado pela Rocketseat :rocket:.
 
-First, run the development server:
+**Telas**
+hourglass_flowing_sand: Em construção
+
+### :page_with_curl: Informações sobre o Projeto
+
+A ideia surgiu da necessidade de ajudar as milhares de pessoas que trabalham usando o computador a evitar futuros problemas de saúde, como:
+
+- Tendinite;
+- Dores nas costas;
+- Má circulação nas pernas;
+- Problemas de visão.
+
+E ajudar a manter o foco e melhorar a produtividade de forma que não prejudique a saúde.
+
+Para isso juntamos a técnica de gestão do tempo Pomodoro, como exercícios para o corpo e para os olhos e para dar aquela estimulada aplicamos a ideia de level que nos jogos online são usados para definir a experiência do personagem.
+
+### :clipboard: Resolução
+
+**Pomodoro - Técnica de gestão do tempo**
+
+Para realizar o controle do tempo foi criado um componente de cronometro, que chamamos de Countdown. Com variáveis de controle de estado recebe o tempo de 25 min convertido em segundos, e quando o relógio é inicializado o tempo inicial é atualizado em um intervalo de 1 segundo, sempre diminuindo um segundo até que o contador chegue a zero.
+
+**Desafios Aleatórios**
+
+A dada termino de ciclo do Pomodoro é sugerido ao usuário um desafio para o corpo ou para os olhos, a escolha do desafio é realizada de forma aleatória. A lista de desafios é passada em um documento JSON, e para garantir a aleatoriedade é realizado uma multiplicação entre um numero randômico e a quantidade de itens no JSON.
+
+**Subir de Nível**
+
+Sempre que o usuário recebe a sugestão do desafio, já possível visualizar quanto de experiencia que ira ganhar, e quando o usuário receber a quantidade necessária de experiencia, ele passa para o  próximo nível. Para saber o valor necessário de xp foi realizado um calculo de potencia que os jogos usam para definir a dificuldade do desafio.
+
+Para que o usuário não perca as informações de nível atual e desafios realizados, caso ele decida fechar o navegador, foi utilizado os cookies do browser para salvar as informações de nível, experiência e desafios concluídos, assim quando o usuário retornar vai poder voltar onde parou.
+
+**Autenticação de Usuário**
+:hourglass_flowing_sand: Em construção
+
+**Responsividade**
+:hourglass_flowing_sand: Em construção
+
+
+
+### :hammer_and_wrench: Tecnologias usadas
+
+- Next.js
+- React.js
+- TypeScript
+- CSS3
+- HTML5
+- Biblioteca Js-Cookies
+- Biblioteca React-Icons
+
+### :computer: Execução
+
+Para você rodar o projeto localmente é necessário que realize o clone do projeto e executar o comando:
+
+```bash
+npm install
+```
+
+E para executar a aplicação de o seguinte comando:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Agora no navegar acesse [http://localhost:3000/](http://localhost:3000/)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### :octocat: Deploy
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+:hourglass_flowing_sand: Em construção
