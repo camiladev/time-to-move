@@ -1,8 +1,22 @@
 import style from '../styles/components/Login.module.css';
 
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
+import { useState } from 'react';
+import api from '../services/api';
 
 export function Login(){
+    const [userName, setUserName] = useState();
+
+    function handleInput(value){
+        setUserName(value.target.value)
+    }
+
+    async function handleSubmitSignIn(){
+
+        const response = await api.get(`users/${userName}`);
+        const data = response.data;
+        console.log(data)
+    }
 
     return(
         <div className={style.loginContainer}>
@@ -23,11 +37,21 @@ export function Login(){
                         <FaGithub /> 
                             Faça login com seu Github para começar
                         </p>
-                        <form>
-                            <input type="text" placeholder="Digite seu username"/>
-                            <button type="button"><FaArrowRight /></button>
+                        <div className={style.form}>
+                            <input 
+                                type="text" 
+                                value={userName}
+                                onChange={handleInput}
+                                placeholder="Digite seu username"
+                            />
+                            <button 
+                                type="button"
+                                onClick={handleSubmitSignIn}
+                            >
+                                <FaArrowRight />
+                            </button>
 
-                        </form>
+                        </div>
                     </div>
 
                 </div>

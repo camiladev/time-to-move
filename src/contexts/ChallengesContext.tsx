@@ -4,6 +4,8 @@ import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
 import { Login } from "../components/Login";
 
+
+
 interface Challenge{
     type: 'body' | 'eye';
     description: string;
@@ -43,13 +45,16 @@ export function ChallengesProvider({
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
+    
 
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
+    //Pedir autorização para mostrar notificação
     useEffect(() => {
         Notification.requestPermission();
     }, []);
 
+    //Salva os dados da sessão do usuário
     useEffect(() => {
         Cookie.set('level', String(level));
         Cookie.set('currentExperience', String(currentExperience));
@@ -105,6 +110,8 @@ export function ChallengesProvider({
         setActiveChallenge(null);
         setChallengesCompleted(challengesCompleted + 1);
     }
+
+    
 
     return(
         <ChallengesContext.Provider value={{

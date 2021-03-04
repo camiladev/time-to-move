@@ -85,14 +85,14 @@
     margin-right: 1rem;
 }
 
-.login form{
+.login .form{
     height: 50px;    
 
     display: flex;
     align-items: center;
 }
 
-.login form input{
+.login .form input{
     height: 100%;
     padding: 1rem;
     color: var(--text-highlight);
@@ -103,17 +103,17 @@
     background: linear-gradient(90deg, rgba(232,63,91,1) 35%, rgba(232,63,91,0.45) 100%);
 }
 
-.login form input:hover{
+.login .form input:hover{
  
     cursor: pointer;
 }
 
-.login form input:focus{
+.login .form input:focus{
     color: var(--white);
     
 }
 
-.login form button{
+.login .form button{
     height: 100%;
     width: 50px;
     
@@ -122,7 +122,7 @@
     background: var(--red-dark);
 }
 
-.login form button:focus{    
+.login .form button:focus{    
     background: var(--green);
     color: var(--white);
 }
