@@ -3,7 +3,7 @@
 Este projeto é a evolução do projeto Move.it que iniciei durante a realização do Next Level Week 4º realizado pela Rocketseat :rocket:.
 
 **Telas**
-hourglass_flowing_sand: Em construção
+:hourglass_flowing_sand: Em construção
 
 ### :page_with_curl: Informações sobre o Projeto
 
