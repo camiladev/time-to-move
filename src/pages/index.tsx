@@ -10,42 +10,56 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from "../contexts/CountdownContext";
 
 import styles from '../styles/pages/Home.module.css'
+import { AuthProvider } from '../contexts/AuthContext';
 
 interface HomeProps {
   level: number;
   currentExperience: number;
   challengesCompleted: number;
+  isLogged: boolean;
+  userName: string;
+  imgUser: string;
+  nameFull: string;
 }
 
 export default function Home(props: HomeProps) {
   return (
-    <ChallengesProvider
-      level = {props.level}
-      currentExperience = {props.currentExperience}
-      challengesCompleted = {props.challengesCompleted}
-    >
+    <AuthProvider 
+      isLogged = {props.isLogged}
+      userName = {props.userName}
+      imgUser = {props.imgUser}
+      nameFull = {props.nameFull}
+      >
+          <ChallengesProvider
+            level = {props.level}
+            currentExperience = {props.currentExperience}
+            challengesCompleted = {props.challengesCompleted}
+          >
 
-          <div className={styles.container}>
-            <Head >
-                <title>Início | move.it</title>
-            </Head >
+                <div className={styles.container}>
+                  <Head >
+                      <title>Início | TimeToMove</title>
+                  </Head >
 
-            <ExperienceBar />
+                  <ExperienceBar />
 
-            <CountdownProvider>
-                <section>
-                  <div>
-                    <Profile />
-                    <CompletedChallenges />
-                    <Countdown />
-                  </div>
-                  <div>
-                      <ChallengeBox />
-                  </div>
-                </section>
-            </CountdownProvider>
-          </div>
-    </ChallengesProvider>
+                  <CountdownProvider>
+                      <section>
+                        <div>
+                          <Profile />
+                          <CompletedChallenges />
+                          <Countdown />
+                        </div>
+                        <div>
+                            <ChallengeBox />
+                        </div>
+                      </section>
+                  </CountdownProvider>
+                </div>
+          </ChallengesProvider>
+
+
+    </AuthProvider>
   )
 }
 
@@ -53,9 +67,19 @@ export default function Home(props: HomeProps) {
 export const getServerSideProps:GetServerSideProps = async (ctx) => {
   const { level,
           currentExperience,
-          challengesCompleted} = ctx.req.cookies;
+          challengesCompleted,
+          isLogged,
+          userName, 
+          imgUser,
+          nameFull,
+        } = ctx.req.cookies;
+        console.log("Atual", isLogged)
   return{
     props: {
+      isLogged: Boolean(isLogged),
+      userName: userName,
+      imgUser: imgUser,
+      nameFull: nameFull,
       level: Number(level),
       currentExperience: Number(currentExperience),
       challengesCompleted: Number(challengesCompleted)

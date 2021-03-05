@@ -3,6 +3,7 @@ import Cookie from 'js-cookie';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
 import { Login } from "../components/Login";
+import { AuthContext } from "./AuthContext";
 
 
 
@@ -38,14 +39,16 @@ export function ChallengesProvider({
     children,
     ...rest
 }: ChallengesProviderProps){
+
+    const {isLogged} = useContext(AuthContext);
+
     const [level, setLevel] = useState(rest.level ?? 1);
     const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
     const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
 
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
-    const [isLogged, setIsLogged] = useState(false);
-    
+        
 
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
@@ -62,7 +65,8 @@ export function ChallengesProvider({
 
     }, [level,
         currentExperience,
-        challengesCompleted,]);
+        challengesCompleted,
+        ]);
 
     function levelUp(){
         setLevel(level + 1);

@@ -1,25 +1,19 @@
 import style from '../styles/components/Login.module.css';
 
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
-import { useState } from 'react';
-import api from '../services/api';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import Head from 'next/head';
+
 
 export function Login(){
-    const [userName, setUserName] = useState();
-
-    function handleInput(value){
-        setUserName(value.target.value)
-    }
-
-    async function handleSubmitSignIn(){
-
-        const response = await api.get(`users/${userName}`);
-        const data = response.data;
-        console.log(data)
-    }
+    const {userName, handleInput, handleSubmitSignIn} = useContext(AuthContext);
 
     return(
         <div className={style.loginContainer}>
+            <Head >
+                <title>Login | TimeToMove</title>
+            </Head >
             <section>
                 <div className={style.logo}>
                 </div>
