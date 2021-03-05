@@ -35,7 +35,11 @@ Sempre que o usuário recebe a sugestão do desafio, já possível visualizar qu
 Para que o usuário não perca as informações de nível atual e desafios realizados, caso ele decida fechar o navegador, foi utilizado os cookies do browser para salvar as informações de nível, experiência e desafios concluídos, assim quando o usuário retornar vai poder voltar onde parou.
 
 **Autenticação de Usuário**
-:hourglass_flowing_sand: Em construção
+Para realizar o login do usuário optei por apenas consultar a api do github e pegar os dados do usuário que tiver conta no github.
+
+Utilizei o axios para fazer a requisição no servidor do github e retornar os dados que utilizei.
+
+Optei por realizar desta forma pois não estou fazendo a estrutura de backend.
 
 **Responsividade**
 :hourglass_flowing_sand: Em construção
