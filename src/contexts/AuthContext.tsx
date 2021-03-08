@@ -17,6 +17,7 @@ interface AuthContextData{
 interface ValueData{
     avatar_url: string;
     name: string;
+    user: string;
 }
 
 interface AuthProviderProps {
@@ -24,7 +25,8 @@ interface AuthProviderProps {
     isLogged: boolean;
     nameFull: string;
     imgUser: string;
-    userName: string;
+    // userName: string;
+    usernameSign: string;
 }
 
 
@@ -32,8 +34,8 @@ export const AuthContext = createContext({} as AuthContextData);
 
 
 export function AuthProvider( {children, ...rest}:AuthProviderProps ){
-    const [userName, setUserName] = useState(rest.userName ?? '');
-
+    const [userName, setUserName] = useState('');
+    const [usernameSign, setUsernameSign] = useState(rest.userName ?? '')
     const [nameFull, setNameFull] = useState(rest.nameFull ?? '');
     const [imgUser, setImgUser] = useState(rest.imgUser ?? '');
 
@@ -45,7 +47,7 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
         Cookie.set('isLogged', String(isLogged));
         Cookie.set('nameFull', String(nameFull));
         Cookie.set('imgUser', String(imgUser));
-        Cookie.set('userName', String(userName));
+        Cookie.set('usernameSign', String(usernameSign));
         
     }, [isLogged,
         nameFull,
@@ -66,6 +68,7 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
             setNameFull(data.name);
             setImgUser(data.avatar_url);
             setIsLogged(true);
+            setUsernameSign(data.user);
             
         }catch(error){
             alert("Usuário não localizado!!")

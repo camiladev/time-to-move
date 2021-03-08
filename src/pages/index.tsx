@@ -17,7 +17,7 @@ interface HomeProps {
   currentExperience: number;
   challengesCompleted: number;
   isLogged: boolean;
-  userName: string;
+  usernameSign: string;
   imgUser: string;
   nameFull: string;
 }
@@ -26,7 +26,7 @@ export default function Home(props: HomeProps) {
   return (
     <AuthProvider 
       isLogged = {props.isLogged}
-      userName = {props.userName}
+      usernameSign = {props.usernameSign}
       imgUser = {props.imgUser}
       nameFull = {props.nameFull}
       >
@@ -69,7 +69,7 @@ export const getServerSideProps:GetServerSideProps = async (ctx) => {
           currentExperience,
           challengesCompleted,
           isLogged,
-          userName, 
+          usernameSign, 
           imgUser,
           nameFull,
         } = ctx.req.cookies;
@@ -77,9 +77,9 @@ export const getServerSideProps:GetServerSideProps = async (ctx) => {
   return{
     props: {
       isLogged: Boolean(isLogged),
-      userName: userName,
-      imgUser: imgUser,
-      nameFull: nameFull,
+      userName: String(usernameSign),
+      imgUser: String(imgUser),
+      nameFull: String(nameFull),
       level: Number(level),
       currentExperience: Number(currentExperience),
       challengesCompleted: Number(challengesCompleted)

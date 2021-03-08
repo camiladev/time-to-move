@@ -104,13 +104,13 @@
 }
 
 .login .form input:hover{
- 
+    outline: var(--red-dark) solid 2px;
     cursor: pointer;
 }
 
 .login .form input:focus{
     color: var(--white);
-    
+    outline: var(--red-dark) solid 2px;
 }
 
 .login .form button{
