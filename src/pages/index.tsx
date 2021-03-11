@@ -11,6 +11,7 @@ import { CountdownProvider } from "../contexts/CountdownContext";
 
 import styles from '../styles/pages/Home.module.css'
 import { AuthProvider } from '../contexts/AuthContext';
+import SideBar from '../components/SideBar';
 
 interface HomeProps {
   level: number;
@@ -37,27 +38,32 @@ export default function Home(props: HomeProps) {
             currentExperience = {props.currentExperience}
             challengesCompleted = {props.challengesCompleted}
           >
+            <div className={styles.bodyContainer}>
+                <SideBar />
 
-                <div className={styles.container}>
-                  <Head >
-                      <title>Início | TimeToMove</title>
-                  </Head >
+                    <div className={styles.container}>
+                      <Head >
+                          <title>Início | TimeToMove</title>
+                      </Head >
 
-                  <ExperienceBar />
+                      <ExperienceBar />
 
-                  <CountdownProvider>
-                      <section>
-                        <div>
-                          <Profile />
-                          <CompletedChallenges />
-                          <Countdown />
-                        </div>
-                        <div>
-                            <ChallengeBox />
-                        </div>
-                      </section>
-                  </CountdownProvider>
-                </div>
+                      <CountdownProvider>
+                          <section>
+                            <div>
+                              <Profile />
+                              <CompletedChallenges />
+                              <Countdown />
+                            </div>
+                            <div>
+                                <ChallengeBox />
+                            </div>
+                          </section>
+                      </CountdownProvider>
+                    </div>
+
+
+            </div>
           </ChallengesProvider>
 
 
