@@ -1,23 +1,27 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 import Cookie from 'js-cookie';
 
 import api from '../services/api';
+import { CountdownProvider } from "./CountdownContext";
+import { Login } from "../components/Login";
+
 
 
 interface AuthContextData{
     userName: string;
+    usernameSign: string;
     nameFull: string;
     imgUser: string;
     isLogged: boolean;
-    handleInput: () => {};
+    handleInput(value: React.ChangeEvent<HTMLInputElement>): void;
     handleSubmitSignIn: () => void;
 }
 
 interface ValueData{
     avatar_url: string;
     name: string;
-    user: string;
+    login: string;
 }
 
 interface AuthProviderProps {
@@ -25,7 +29,7 @@ interface AuthProviderProps {
     isLogged: boolean;
     nameFull: string;
     imgUser: string;
-    // userName: string;
+    userName: string;
     usernameSign: string;
 }
 
@@ -35,7 +39,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider( {children, ...rest}:AuthProviderProps ){
     const [userName, setUserName] = useState('');
-    const [usernameSign, setUsernameSign] = useState(rest.userName ?? '')
+    const [usernameSign, setUsernameSign] = useState(rest.usernameSign ?? '')
     const [nameFull, setNameFull] = useState(rest.nameFull ?? '');
     const [imgUser, setImgUser] = useState(rest.imgUser ?? '');
 
@@ -52,12 +56,13 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
     }, [isLogged,
         nameFull,
         imgUser,
-
+        usernameSign,
         ]);
 
-    function handleInput(value){
-        const user = value.target.value;
+    function handleInput(value: React.ChangeEvent<HTMLInputElement>): void{
+        const user = value.currentTarget.value;
         setUserName(user)
+
     }
 
     async function handleSubmitSignIn(){
@@ -65,10 +70,15 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
         try{
             const response = await api.get(`users/${userName}`);
             const data: ValueData = response.data;
+            console.log('retorno dta ', data.login)
             setNameFull(data.name);
             setImgUser(data.avatar_url);
-            setIsLogged(true);
-            setUsernameSign(data.user);
+            setUsernameSign(data.login);
+            {data.login !== '' ? 
+                setIsLogged(true): console.log('erro login vazio')
+        
+            }
+           
             
         }catch(error){
             alert("Usuário não localizado!!")
@@ -78,6 +88,7 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
     return(
         <AuthContext.Provider value={{
             userName,
+            usernameSign,
             nameFull,
             imgUser,
             isLogged,
@@ -85,7 +96,8 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
             handleSubmitSignIn
         }}>
             
-            { children  }
+            { isLogged ? children : <Login /> }
+
             
         </AuthContext.Provider>
     )

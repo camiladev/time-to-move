@@ -40,7 +40,7 @@ export function ChallengesProvider({
     ...rest
 }: ChallengesProviderProps){
 
-    const {isLogged} = useContext(AuthContext);
+    const {isLogged, usernameSign} = useContext(AuthContext);
 
     const [level, setLevel] = useState(rest.level ?? 1);
     const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
@@ -51,6 +51,9 @@ export function ChallengesProvider({
         
 
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
+
+    console.log('UserName ', usernameSign)
+    console.log('isLogged ', isLogged)
 
     //Pedir autorização para mostrar notificação
     useEffect(() => {
@@ -131,7 +134,7 @@ export function ChallengesProvider({
             closeLevelUpModal
         }}>
             
-            { isLogged ? children : <Login /> }
+            { children }
             
             
             { isLevelUpModalOpen && <LevelUpModal /> }
