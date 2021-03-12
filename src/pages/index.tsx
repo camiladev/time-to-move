@@ -1,19 +1,23 @@
-import  Head  from 'next/head';
 import { GetServerSideProps } from 'next';
 
-import { ChallengeBox } from "../components/ChallengeBox";
-import { CompletedChallenges } from "../components/CompletedChallenges";
-import { Countdown } from "../components/Countdown";
-import { ExperienceBar } from "../components/ExperienceBar";
-import { Profile } from "../components/Profile";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+} from 'react-router-dom'
+
+ 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { CountdownProvider } from "../contexts/CountdownContext";
+import HomePage from '../pages/home'
 
-import styles from '../styles/pages/Home.module.css'
-import { AuthProvider } from '../contexts/AuthContext';
+import styles from '../styles/pages/Index.module.css'
+import { AuthContext, AuthProvider } from '../contexts/AuthContext';
 import SideBar from '../components/SideBar';
+import { useContext } from 'react';
+import Leaderboard from './leaderboard';
 
-interface HomeProps {
+interface IndexProps {
   level: number;
   currentExperience: number;
   challengesCompleted: number;
@@ -24,7 +28,9 @@ interface HomeProps {
   nameFull: string;
 }
 
-export default function Home(props: HomeProps) {
+export default function Home(props: IndexProps) {
+  
+  // const match = useRouteMatch();
   return (
     <AuthProvider 
       isLogged = {props.isLogged}
@@ -32,40 +38,32 @@ export default function Home(props: HomeProps) {
       usernameSign = {props.usernameSign}
       imgUser = {props.imgUser}
       nameFull = {props.nameFull}
-      >
+      >          
           <ChallengesProvider
             level = {props.level}
             currentExperience = {props.currentExperience}
             challengesCompleted = {props.challengesCompleted}
           >
-            <div className={styles.bodyContainer}>
-                <SideBar />
-
-                    <div className={styles.container}>
-                      <Head >
-                          <title>Início | TimeToMove</title>
-                      </Head >
-
-                      <ExperienceBar />
-
-                      <CountdownProvider>
-                          <section>
-                            <div>
-                              <Profile />
-                              <CompletedChallenges />
-                              <Countdown />
-                            </div>
-                            <div>
-                                <ChallengeBox />
-                            </div>
-                          </section>
-                      </CountdownProvider>
-                    </div>
+              <div className={styles.bodyContainer}>
+                  <SideBar />
+                          
+                     
+              <Router>
+                <Switch>
+                  <Route path="/">
+                      <HomePage /> 
+                  </Route>
+                  <Route path="">
+                      {/* <Leaderboard />  */}
+                      <h1>Ola</h1>
+                  </Route>
+                </Switch>
+              </Router>
 
 
-            </div>
+              </div>
+
           </ChallengesProvider>
-
 
     </AuthProvider>
   )

@@ -14,8 +14,10 @@ interface AuthContextData{
     nameFull: string;
     imgUser: string;
     isLogged: boolean;
+    isHomePage: boolean;
     handleInput(value: React.ChangeEvent<HTMLInputElement>): void;
     handleSubmitSignIn: () => void;
+    logOut: () => void;
 }
 
 interface ValueData{
@@ -43,7 +45,10 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
     const [nameFull, setNameFull] = useState(rest.nameFull ?? '');
     const [imgUser, setImgUser] = useState(rest.imgUser ?? '');
 
-    const [isLogged, setIsLogged] = useState(rest.isLogged ?? false);
+    const [isLogged, setIsLogged] = useState(false);
+    const [isHomePage, setIsHomePage] = useState(false);
+
+    console.log('isLogged retorno cookies', rest.isLogged)
 
 //rest.isLogged ?? 
     //Salva se o usuário estiver logado
@@ -52,6 +57,7 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
         Cookie.set('nameFull', String(nameFull));
         Cookie.set('imgUser', String(imgUser));
         Cookie.set('usernameSign', String(usernameSign));
+        console.log('isLogged', isLogged)
         
     }, [isLogged,
         nameFull,
@@ -74,15 +80,17 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
             setNameFull(data.name);
             setImgUser(data.avatar_url);
             setUsernameSign(data.login);
-            {data.login !== '' ? 
-                setIsLogged(true): console.log('erro login vazio')
-        
-            }
-           
+            setIsLogged(true);    
+            setIsHomePage(true);       
             
         }catch(error){
             alert("Usuário não localizado!!")
         }
+    }
+
+    function logOut(){
+        setUserName('');
+        setIsLogged(false);
     }
 
     return(
@@ -92,8 +100,10 @@ export function AuthProvider( {children, ...rest}:AuthProviderProps ){
             nameFull,
             imgUser,
             isLogged,
+            isHomePage,
             handleInput,
-            handleSubmitSignIn
+            handleSubmitSignIn,
+            logOut
         }}>
             
             { isLogged ? children : <Login /> }
