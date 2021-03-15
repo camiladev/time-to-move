@@ -19,6 +19,17 @@
     font-size: 8.5rem;
     text-align: center;
 }
+@media(max-width: 920px){
+       
+    .countdownContainer > div{
+       
+        font-size: 6.5rem;
+        
+    }
+
+
+}
+
 
 .countdownContainer > div span{
     flex: 1;

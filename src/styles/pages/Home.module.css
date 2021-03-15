@@ -8,6 +8,7 @@
 
     display: flex;
     flex-direction: column;
+    
 }
 
 .container section{
@@ -19,10 +20,20 @@
     align-content: center;
 }
 
-/* .container section div{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-} */
+@media(max-width: 920px){
+    .container{
+        
+        width: 992px;
+        margin-left: 50px;
+    
+    }
+       
+    .container section{
+        
+        grid-template-columns: 1fr;
+        gap: 3.25rem;
+        padding-top: 3.25rem;
+    }
+
+
+}

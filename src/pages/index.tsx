@@ -12,7 +12,6 @@ import { ChallengesProvider } from '../contexts/ChallengesContext';
 import HomePage from './home';
 
 
-
 interface IndexProps {
   level: number;
   currentExperience: number;
@@ -27,15 +26,17 @@ interface IndexProps {
 export default function Home(props: IndexProps) {
   
   return (
-           
-          <ChallengesProvider
-            level = {props.level}
-            currentExperience = {props.currentExperience}
-            challengesCompleted = {props.challengesCompleted}
-          >
-             <HomePage />
+          
+              <ChallengesProvider
+                level = {props.level}
+                currentExperience = {props.currentExperience}
+                challengesCompleted = {props.challengesCompleted}
+              >
+                <HomePage />
 
-          </ChallengesProvider>
+              </ChallengesProvider>
+
+          
 
    
   )

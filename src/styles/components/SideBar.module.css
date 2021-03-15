@@ -1,6 +1,6 @@
 .sideBarContainer{
     width: 5rem;
-    min-width: 50px;
+    
     height: 100vh;
     padding: 20px 0;
     background: white;
@@ -9,6 +9,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+}
+@media(max-width: 920px){
+       
+    .sideBarContainer{
+       position: fixed;
+       width: 50px;
+    }
+
+
 }
 
 .sideBarContainer header {

@@ -144,6 +144,9 @@
     .login{
         height: 100%;
     }
+    .login h1{
+        font-size: 2.5rem;
+    }
 
 }
 
