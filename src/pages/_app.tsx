@@ -1,8 +1,18 @@
+import Layout from '../components/Layout'
+import { AuthProvider } from '../contexts/AuthContext'
 import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
   return (    
-      <Component {...pageProps} />   
+    <AuthProvider>
+      <Layout>
+        <Component {...pageProps} />   
+      </Layout>
+
+    </AuthProvider>
+
+
+    
   )  
   
 }
