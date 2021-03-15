@@ -2,8 +2,6 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import Cookie from 'js-cookie';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
-import { AuthContext } from "./AuthContext";
-
 
 
 interface Challenge{
@@ -39,8 +37,6 @@ export function ChallengesProvider({
     ...rest
 }: ChallengesProviderProps){
 
-    //const {isLogged, usernameSign} = useContext(AuthContext);
-
     const [level, setLevel] = useState(rest.level ?? 1);
     const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
     const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
@@ -50,9 +46,6 @@ export function ChallengesProvider({
         
 
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
-
-    // console.log('UserName ', usernameSign)
-    // console.log('isLogged ', isLogged)
 
     //Pedir autorização para mostrar notificação
     useEffect(() => {
