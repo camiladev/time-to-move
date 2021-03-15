@@ -1,12 +1,5 @@
 import { GetServerSideProps } from 'next';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useRouteMatch,
-} from 'react-router-dom'
-
  
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import HomePage from './home';
