@@ -27,11 +27,7 @@ interface ValueData{
 
 interface AuthProviderProps {
     children: ReactNode;
-    // isLogged: boolean;
-    // nameFull: string;
-    // imgUser: string;
-    // userName: string;
-    // usernameSign: string;
+    
 }
 
 
