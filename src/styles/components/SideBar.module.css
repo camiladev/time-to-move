@@ -41,8 +41,8 @@
 }
 
 .selected{
-    border-left: 2.25px solid var(--green);
-    color: var(--green);
+    border-left: 2.25px solid var(--red);
+    color: var(--red);
 }
 
 .sideBarContainer a{

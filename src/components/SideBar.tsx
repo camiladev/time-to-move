@@ -29,11 +29,11 @@ export default function SideBar(){
                                 <a><FiAward /></a>
                             </ActiveLink>
                         </li>
-                        <li>
+                        {/* <li>
                             <ActiveLink href="/todo">
                                 <a href="#"><RiTodoFill /></a>
                             </ActiveLink>
-                        </li>
+                        </li> */}
                     </ul>
                     
                 </div>
