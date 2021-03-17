@@ -4,6 +4,7 @@ import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 import api from '../services/api';
 import { Login } from "../components/Login";
+import { useRouter } from "next/router";
 
 
 
@@ -43,6 +44,8 @@ export function AuthProvider( {children }:AuthProviderProps ){
     const [isLogged, setIsLogged] = useState(false);
     const [isHomePage, setIsHomePage] = useState(false);
 
+    const router = useRouter();
+
    
 //rest.isLogged ?? 
     //Salva se o usuário estiver logado
@@ -75,7 +78,8 @@ export function AuthProvider( {children }:AuthProviderProps ){
             setImgUser(data.avatar_url);
             setUsernameSign(data.login);
             setIsLogged(true);    
-            setIsHomePage(true);       
+            setIsHomePage(true);   
+            
             
         }catch(error){
             alert("Usuário não localizado!!")
@@ -84,6 +88,7 @@ export function AuthProvider( {children }:AuthProviderProps ){
 
     function logOut(){
         setUserName('');
+        router.push('/');
         setIsLogged(false);
     }
 
