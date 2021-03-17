@@ -21,10 +21,8 @@
 }
 @media(max-width: 920px){
        
-    .countdownContainer > div{
-       
-        font-size: 6.5rem;
-        
+    .countdownContainer > div{       
+        font-size: 6.5rem;        
     }
 
 
@@ -61,7 +59,7 @@
     justify-content: center;
 
     border: 0;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px;
 
     background: var(--blue);
     color: var(--white);
@@ -73,25 +71,6 @@
 
     
 }
-/* header */
-.countdownButttonProgress{
-    display: flex;
-    flex-direction: column;
-}
-/* Primeira div */
-.countdownButttonProgress > div {
-    flex: 1;
-    height: 4px;
-    border-radius: 0 0 5px 5px;
-    background: var(--gray-line);
-    
-}
-/* div interna */
-.countdownButttonProgress > div > div{
-    height: 4px;
-    border-radius: 0 0 5px 5px;
-    background: var(--green);
-}
 
 .countdownButton svg {
     margin-left: 0.5rem;
@@ -102,6 +81,7 @@
     color: var(--text);
     cursor: not-allowed;
 
+    border-radius: 5px;
     border-bottom: 0.3rem solid var(--green);
 }
 
@@ -114,8 +94,10 @@
 }
 
 .countdownButtonActive {
+    height: calc(5rem - 0.22rem);
     background: var(--white);
     color: var(--title);
+    border-radius: 5px 5px 0 0;
 }
 
 .countdownButtonActive:hover {
@@ -128,5 +110,26 @@
     color: var(--white);
 }
 
+/* header */
+.countdownButttonProgress{
+    display: flex;
+    flex-direction: column;
+    
+}
+/* Primeira div */
+.countdownButttonProgress > div {
+    flex: 1;
+    height: 0.22rem;
+    border-radius: 0 0 5px 5px;
+    background: var(--gray-line);
+    
+}
+/* div interna */
+.countdownButttonProgress > div > div{
+    height: 0.22rem;
+    border-radius: 0 0 5px 5px;
+    background: var(--green);
+    
+}
 
 

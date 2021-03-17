@@ -8,6 +8,7 @@ import { AiOutlineCaretRight, AiOutlineClose, AiFillCheckCircle} from 'react-ico
 export function Countdown() {
     const { minutes, 
             seconds, 
+            progressCycle,
             hasFinished, 
             isActive , 
             resetCountdown, 
@@ -53,7 +54,7 @@ export function Countdown() {
 
                             </button>
                             <div>
-                                    <div style={{ width: `50%` }}></div>
+                                    <div style={{ width: `${progressCycle}%` }}></div>
                             </div>
 
                         </div>
