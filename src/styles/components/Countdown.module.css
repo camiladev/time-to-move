@@ -61,7 +61,7 @@
     justify-content: center;
 
     border: 0;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
 
     background: var(--blue);
     color: var(--white);
@@ -70,6 +70,27 @@
     font-weight: 600;
 
     transition: background-color 0.2s;
+
+    
+}
+/* header */
+.countdownButttonProgress{
+    display: flex;
+    flex-direction: column;
+}
+/* Primeira div */
+.countdownButttonProgress > div {
+    flex: 1;
+    height: 4px;
+    border-radius: 0 0 5px 5px;
+    background: var(--gray-line);
+    
+}
+/* div interna */
+.countdownButttonProgress > div > div{
+    height: 4px;
+    border-radius: 0 0 5px 5px;
+    background: var(--green);
 }
 
 .countdownButton svg {
@@ -106,4 +127,6 @@
     background: var(--red);
     color: var(--white);
 }
+
+
 

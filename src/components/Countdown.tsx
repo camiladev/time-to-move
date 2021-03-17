@@ -43,22 +43,33 @@ export function Countdown() {
             ) : (
                 <>
                     { isActive ? (
-                        <button 
-                        type="button" 
-                        className={`${style.countdownButton} ${style.countdownButtonActive}`}
-                        onClick={resetCountdown}
-                        >
-                        Abandonar ciclo <AiOutlineClose />
-                    </button>
+                        <div className={style.countdownButttonProgress}>
+                            <button 
+                            type="button" 
+                            className={`${style.countdownButton} ${style.countdownButtonActive}`}
+                            onClick={resetCountdown}
+                            >
+                                Abandonar ciclo <AiOutlineClose />
+
+                            </button>
+                            <div>
+                                    <div style={{ width: `50%` }}></div>
+                            </div>
+
+                        </div>
 
                     ) : (
-                        <button 
-                            type="button" 
-                            className={style.countdownButton}
-                            onClick={startCountdown}
-                            >
-                            Iniciar um ciclo <AiOutlineCaretRight />
-                        </button>
+                        
+                            <button 
+                                type="button" 
+                                className={style.countdownButton}
+                                onClick={startCountdown}
+                                >
+                                Iniciar um ciclo <AiOutlineCaretRight />
+                            </button>
+                           
+                        
+                        
                     )}
                 </>
             )}
