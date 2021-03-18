@@ -7,7 +7,7 @@
 :root{
   --white: #fff;
   --background: #f2f3f5;
-  --gray-line: #dcdde0;
+  --gray-line: #D7D8DA;
   --text: #666666;
   --text-highlight: #b3b9ff;
   --title: #2e384d;
@@ -59,4 +59,10 @@ a{
 
 ul{
   list-style-type: none;
+}
+
+table{
+  margin: 0;
+  padding: 0;
+  border-spacing: 0;
 }

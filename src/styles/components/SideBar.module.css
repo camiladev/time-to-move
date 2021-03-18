@@ -10,11 +10,13 @@
     align-items: center;
     justify-content: space-between;
 }
+
 @media(max-width: 920px){
        
     .sideBarContainer{
        position: fixed;
        width: 50px;
+       
     }
 
 
@@ -22,14 +24,11 @@
 
 .sideBarContainer header {
     width: 100%;
-    height: 50px;
-    /* max-height: 70px; */
 }
+
 .sideBarContainer header img{
     width: 100%;
-    height: 100%;
-
-    
+    height: 100%;    
 }
 
 .sideBarContainer ul{

@@ -33,12 +33,12 @@ export default function Leaderboard(){
                         </td>
                         <td>
                             <p>
-                                5 completados
+                                <span>5</span> completados
                             </p>
                         </td>
                         <td>
                             <p>
-                                15400 xp
+                                <span>15400</span> xp
                             </p>
                         </td>
                     </tr>
@@ -46,7 +46,7 @@ export default function Leaderboard(){
                     {/* nova linha */}
 
                     <tr>
-                        <td>1</td>
+                        <td>2</td>
                         <td>
                             
                             <div>
@@ -62,12 +62,12 @@ export default function Leaderboard(){
                         </td>
                         <td>
                             <p>
-                                5 completados
+                                <span>5</span> completados
                             </p>
                         </td>
                         <td>
                             <p>
-                                15400 xp
+                                <span>15400</span> xp
                             </p>
                         </td>
                     </tr>
@@ -75,7 +75,7 @@ export default function Leaderboard(){
                     {/* nova linha */}
 
                     <tr>
-                        <td>1</td>
+                        <td>3</td>
                         <td>
                             
                             <div>
@@ -91,12 +91,12 @@ export default function Leaderboard(){
                         </td>
                         <td>
                             <p>
-                                5 completados
+                                <span>5</span> completados
                             </p>
                         </td>
                         <td>
                             <p>
-                                15400 xp
+                                <span>15400</span> xp
                             </p>
                         </td>
                     </tr>
