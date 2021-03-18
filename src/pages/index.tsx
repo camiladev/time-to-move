@@ -3,7 +3,6 @@ import { GetServerSideProps } from 'next';
  
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import HomePage from './home';
-import style from '../styles/pages/Index.module.css';
 
 
 interface IndexProps {
@@ -20,7 +19,7 @@ interface IndexProps {
 export default function Home(props: IndexProps) {
   
   return (
-          <div className={style.container}>
+
               <ChallengesProvider
                 level = {props.level}
                 currentExperience = {props.currentExperience}
@@ -28,13 +27,8 @@ export default function Home(props: IndexProps) {
               >
                 <HomePage />
 
-              </ChallengesProvider>
+              </ChallengesProvider>  
 
-          </div>
-
-          
-
-   
   )
 }
 

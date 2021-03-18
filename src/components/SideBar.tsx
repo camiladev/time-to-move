@@ -5,7 +5,6 @@ import { FiAward } from "react-icons/fi";
 import { RiTodoFill } from "react-icons/ri";
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-import Link from 'next/link';
 import ActiveLink from './ActiveLink';
 
 export default function SideBar(){

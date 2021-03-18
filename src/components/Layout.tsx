@@ -10,12 +10,11 @@ export default function Layout({ children }){
     return(
         <div className={styles.bodyContainer}>           
                 <SideBar />          
+                <div>
+                    { children }             
+                </div>            
             
-                { children }             
-
-            
-            
-      </div>
+        </div>
     )
 
 }

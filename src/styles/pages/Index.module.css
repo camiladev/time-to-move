@@ -2,7 +2,11 @@
     width: 100%;
     height: 100vh;
 
-    display: flex;
-    flex-direction: row;
+    display: flex;    
 }
 
+.bodyContainer > div:last-child{
+    width: 100%;
+    height: 100vh;
+  
+}
