@@ -19,8 +19,7 @@
 }
 
 @media(max-width: 920px){
-    .container{
-        
+    .container{        
         width: 85%;
         margin-left: 50px;
     

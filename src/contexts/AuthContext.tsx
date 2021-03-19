@@ -1,10 +1,8 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-// import Cookie from 'js-cookie';
-
-import api from '../services/api';
 import { Login } from "../components/Login";
 import { useRouter } from "next/router";
+import getUsers from "../repositories/user";
 
 
 
@@ -38,8 +36,8 @@ export const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider( {children }:AuthProviderProps ){
     const [userName, setUserName] = useState('');
     const [usernameSign, setUsernameSign] = useState( '')
-    const [nameFull, setNameFull] = useState( '');
-    const [imgUser, setImgUser] = useState( '');
+    const [nameFull, setNameFull] = useState('');
+    const [imgUser, setImgUser] = useState('');
 
     const [isLogged, setIsLogged] = useState(false);
     const [isHomePage, setIsHomePage] = useState(false);
@@ -71,12 +69,11 @@ export function AuthProvider( {children }:AuthProviderProps ){
     async function handleSubmitSignIn(){
         
         try{
-            const response = await api.get(`users/${userName}`);
-            const data: ValueData = response.data;
-            console.log('retorno dta ', data.login)
-            setNameFull(data.name);
-            setImgUser(data.avatar_url);
-            setUsernameSign(data.login);
+            const response:ValueData = await getUsers(userName);
+            
+            setNameFull(response.name);
+            setImgUser(response.avatar_url);
+            setUsernameSign(response.login);
             setIsLogged(true);    
             setIsHomePage(true);   
             
@@ -84,6 +81,7 @@ export function AuthProvider( {children }:AuthProviderProps ){
         }catch(error){
             alert("Usuário não localizado!!")
         }
+        
     }
 
     function logOut(){
