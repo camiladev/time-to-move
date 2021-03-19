@@ -70,6 +70,7 @@ export function AuthProvider( {children }:AuthProviderProps ){
         
         try{
             const response:ValueData = await getUsers(userName);
+            console.log('return response ', response.login) 
             
             setNameFull(response.name);
             setImgUser(response.avatar_url);

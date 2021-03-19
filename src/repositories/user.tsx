@@ -1,5 +1,3 @@
-const URL = "http://localhost:8080/TimeToMove";
-
 import api from '../services/api';
 
 interface ValueData{
@@ -8,11 +6,13 @@ interface ValueData{
     login: string;
 }
 
-export default async function getUsers(userName){
+
+
+export default async function getUsers(userName:string){
     try{
         const response = await api.get(`users/${userName}`);
         const data: ValueData = response.data;
-                
+        console.log('return data ', data.login)    
         return data;
         
     }catch(error){
@@ -20,3 +20,6 @@ export default async function getUsers(userName){
     }
    
 }
+
+
+

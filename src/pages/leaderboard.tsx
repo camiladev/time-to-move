@@ -1,8 +1,20 @@
-
 import styles from '../styles/pages/Leaderboard.module.css'
+
+import data from  '../repositories/user-tm'
+import { useEffect } from 'react';
 
 
 export default function Leaderboard(){
+    useEffect(() => {
+        data.getUserAll()
+        .then((users) => {
+            console.log(users[0]);
+            
+        })
+        .catch((err) => {
+            console.log(err.message);
+        });
+    }, []);
 
     return(
         <div className={styles.container}>
