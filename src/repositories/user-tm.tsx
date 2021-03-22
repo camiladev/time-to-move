@@ -15,10 +15,11 @@ function getUserAll(){
 }
 
 function create(user){
+    console.log('create -> ', user.username)
     return fetch(`${URL_DATA}`, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
     }).then( async (response) => {
         if(response.ok) {
             const res = await response.json()

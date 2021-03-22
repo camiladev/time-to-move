@@ -16,7 +16,7 @@ export default async function getUsers(userName:string){
         return data;
         
     }catch(error){
-        console.log(error)
+        console.log('api git', error)
     }
    
 }

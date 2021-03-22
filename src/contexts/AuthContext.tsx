@@ -42,60 +42,69 @@ export function AuthProvider( {children }:AuthProviderProps ){
     const [imgUser, setImgUser] = useState('');
 
     const [idUserRegistered, setIdUserRegistered] = useState(0);
-
+   // const [isRegistered, setIsRegistered] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
     const [isHomePage, setIsHomePage] = useState(false);
 
     const router = useRouter();
 
-   
-//rest.isLogged ?? 
-    //Salva se o usuário estiver logado
-    // useEffect(() => {
-    //     Cookie.set('isLogged', String(isLogged));
-    //     Cookie.set('nameFull', String(nameFull));
-    //     Cookie.set('imgUser', String(imgUser));
-    //     Cookie.set('usernameSign', String(usernameSign));
-    //     console.log('isLogged', isLogged)
-        
-    // }, [isLogged,
-    //     nameFull,
-    //     imgUser,
-    //     usernameSign,
-    //     ]);
 
-    function findUser(){
-        let isRegistered = false;
-        Repositores.getUserAll().then( (users) => {
-            users.find( (user) => {
-                console.log('User ', user.name)
-                isRegistered = userName === user.username;
-    
-                if(isRegistered){
-                    console.log('isRegistereds true', isRegistered)
-                    setIdUserRegistered(user.id) 
-                    setIsLogged(true)       
-    
-                }else{
-                    console.log('isRegistereds false', isRegistered)
-                        Repositores.create({
-                            username: userName,
-                            name: nameFull,
-                            level: 0,
-                            xp: 0,
-                            completedChalleng: 0,
-                        }).then( () => {
-                            console.log('Novo usuário registrado com sucesso')
-                            setIsLogged(true) 
-                        }).catch( err => {
-                            console.log('Erro de cadastro',err)
-                        })
-    
-                }
-                                             
-                return isRegistered;
-            } );
+    function createUser(newUser){
+        console.log('createUser chamado', newUser.name)
+        Repositores.create({
+            username: userName,
+            name: newUser.name,
+            avatar: newUser.avatar_url,
+            level: 0,
+            xp: 0,
+            completedChalleng: 0,
+        }).then( () => {
+            console.log('Novo usuário registrado com sucesso')
+            setIsLogged(true) 
+        }).catch( err => {
+            console.log('Erro de cadastro',err)
         })
+    }
+
+    function findUser(userGit){
+        let isRegistered = false;
+        console.log('findUser', userGit.name)
+        const response = Repositores.getUserAll().then( (users) => {
+            console.log('users', users.length)
+            if(users.length === 0){
+                console.log('users vazio', users)
+                setIdUserRegistered(1)
+                createUser(userGit);  
+                return;
+            }
+            const ultimo = users.slice(-1)[0];
+            console.log('ultimo', ultimo.id+1)
+
+            const userFind = users.find( (user) => {
+                
+                const register = userName === user.username;
+                console.log('find 2 ', register, "username ",userName, 'NameFull ', nameFull) 
+                isRegistered = register;
+                setIdUserRegistered(user.id);   
+                
+                return register;
+            } );
+            console.log('userFind ',userFind, 'isRegistered', isRegistered)
+            if(isRegistered === true ){
+                console.log('isRegistereds true 2', isRegistered)
+                setIsLogged(true)       
+    
+            }else{
+                console.log('isRegistereds false 3', isRegistered)
+                setIdUserRegistered(ultimo.id+1)
+                createUser(userGit);    
+            }    
+        }).catch( (err) => {
+            console.log(err) 
+        })
+        console.log('response ',response)     
+                         
+       
     }
  
 
@@ -109,12 +118,11 @@ export function AuthProvider( {children }:AuthProviderProps ){
         
         try{
             const response:ValueData = await getUsers(userName);
-            console.log('return response ', response.login) 
+            console.log('return github 1 ', response.name) 
             
             setNameFull(response.name);
             setImgUser(response.avatar_url);
-            findUser();
-            //setIsLogged(true);               
+            findUser(response);             
             
         }catch(error){
             alert("Usuário não localizado!!")
