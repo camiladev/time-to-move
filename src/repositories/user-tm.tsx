@@ -14,6 +14,16 @@ function getUserAll(){
     })
 }
 
+function getOneUser(user){
+    return fetch(`${URL_DATA}/${user}`).then( async (res) => {
+        if(res.ok){
+            const oneUser = await res.json();
+            return oneUser;
+        }
+    })
+
+}
+
 function create(user){
     console.log('create -> ', user.username)
     return fetch(`${URL_DATA}`, {
@@ -47,7 +57,8 @@ function update(userUpdate){
 export default{
     getUserAll,
     create,
-    update
+    update,
+    getOneUser
 };
 
 

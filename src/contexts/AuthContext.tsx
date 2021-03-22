@@ -10,11 +10,12 @@ import Repositores from '../repositories/user-tm';
 
 interface AuthContextData{
     userName: string;
-    usernameSign: string;
+    // usernameSign: string;
     nameFull: string;
     imgUser: string;
     isLogged: boolean;
-    isHomePage: boolean;
+    idUserRegistered: number;
+    // isHomePage: boolean;
     handleInput(value: React.ChangeEvent<HTMLInputElement>): void;
     handleSubmitSignIn: () => void;
     logOut: () => void;
@@ -37,14 +38,14 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider( {children }:AuthProviderProps ){
     const [userName, setUserName] = useState('');
-    const [usernameSign, setUsernameSign] = useState( '')
+    // const [usernameSign, setUsernameSign] = useState( '')
     const [nameFull, setNameFull] = useState('');
     const [imgUser, setImgUser] = useState('');
 
     const [idUserRegistered, setIdUserRegistered] = useState(0);
-   // const [isRegistered, setIsRegistered] = useState(false);
+
     const [isLogged, setIsLogged] = useState(false);
-    const [isHomePage, setIsHomePage] = useState(false);
+    // const [isHomePage, setIsHomePage] = useState(false);
 
     const router = useRouter();
 
@@ -55,9 +56,10 @@ export function AuthProvider( {children }:AuthProviderProps ){
             username: userName,
             name: newUser.name,
             avatar: newUser.avatar_url,
-            level: 0,
+            level: 1,
             xp: 0,
-            completedChalleng: 0,
+            currentXp: 0,
+            challengesCompleted: 0,
         }).then( () => {
             console.log('Novo usuário registrado com sucesso')
             setIsLogged(true) 
@@ -139,11 +141,12 @@ export function AuthProvider( {children }:AuthProviderProps ){
     return(
         <AuthContext.Provider value={{
             userName,
-            usernameSign,
+            // usernameSign,
             nameFull,
             imgUser,
             isLogged,
-            isHomePage,
+            idUserRegistered,
+            // isHomePage,
             handleInput,
             handleSubmitSignIn,
             logOut
