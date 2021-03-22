@@ -23,7 +23,7 @@ let contX: number = 0;
 
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-    const startTime = 25 * 60;//retorna o valor em segundos de 25 minutos
+    const startTime = 0.1 * 60;//retorna o valor em segundos de 25 minutos
     const {startNewChallenge } = useContext(ChallengesContext);
     const [time, setTime] = useState(startTime); //retorna o valor em segundos de 25 minutos
     const [isActive, setIsActive] = useState(false);

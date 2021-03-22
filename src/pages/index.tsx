@@ -39,7 +39,7 @@ export const getServerSideProps:GetServerSideProps = async (ctx) => {
           challengesCompleted,
           
         } = ctx.req.cookies;
-     
+    console.log("Experiencia inicial",currentExperience )
   return{
     props: {
      
