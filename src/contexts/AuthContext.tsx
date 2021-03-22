@@ -4,6 +4,8 @@ import { Login } from "../components/Login";
 import { useRouter } from "next/router";
 import getUsers from "../repositories/user";
 
+import Repositores from '../repositories/user-tm';
+
 
 
 interface AuthContextData{
@@ -39,6 +41,8 @@ export function AuthProvider( {children }:AuthProviderProps ){
     const [nameFull, setNameFull] = useState('');
     const [imgUser, setImgUser] = useState('');
 
+    const [idUserRegistered, setIdUserRegistered] = useState(0);
+
     const [isLogged, setIsLogged] = useState(false);
     const [isHomePage, setIsHomePage] = useState(false);
 
@@ -60,6 +64,41 @@ export function AuthProvider( {children }:AuthProviderProps ){
     //     usernameSign,
     //     ]);
 
+    function findUser(){
+        let isRegistered = false;
+        Repositores.getUserAll().then( (users) => {
+            users.find( (user) => {
+                console.log('User ', user.name)
+                isRegistered = userName === user.username;
+    
+                if(isRegistered){
+                    console.log('isRegistereds true', isRegistered)
+                    setIdUserRegistered(user.id) 
+                    setIsLogged(true)       
+    
+                }else{
+                    console.log('isRegistereds false', isRegistered)
+                        Repositores.create({
+                            username: userName,
+                            name: nameFull,
+                            level: 0,
+                            xp: 0,
+                            completedChalleng: 0,
+                        }).then( () => {
+                            console.log('Novo usuário registrado com sucesso')
+                            setIsLogged(true) 
+                        }).catch( err => {
+                            console.log('Erro de cadastro',err)
+                        })
+    
+                }
+                                             
+                return isRegistered;
+            } );
+        })
+    }
+ 
+
     function handleInput(value: React.ChangeEvent<HTMLInputElement>): void{
         const user = value.currentTarget.value;
         setUserName(user)
@@ -74,10 +113,8 @@ export function AuthProvider( {children }:AuthProviderProps ){
             
             setNameFull(response.name);
             setImgUser(response.avatar_url);
-            setUsernameSign(response.login);
-            setIsLogged(true);    
-            setIsHomePage(true);   
-            
+            findUser();
+            //setIsLogged(true);               
             
         }catch(error){
             alert("Usuário não localizado!!")
