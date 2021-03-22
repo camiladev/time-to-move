@@ -1,20 +1,69 @@
 import styles from '../styles/pages/Leaderboard.module.css'
 
 import data from  '../repositories/user-tm'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
+
+function UserRow({user}){
+    console.log('Usuários Linha ', user )
+    return(
+        <tr>
+            <td>1</td>
+                <td>
+                    <div>
+                        <img src={user.avatar} alt={user.name}/>
+                         <div>
+                            <strong>{user.name}</strong>
+                                <p>
+                                    <img src="icons/level.svg" alt="icone level"/>
+                                        Level {user.level}
+                                </p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <p>
+                        <span>{user.challengesCompleted}</span> completados
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <span>{user.xp}</span> xp
+                    </p>
+                </td>
+        </tr>
+    );
+
+}
 
 export default function Leaderboard(){
+    const [userAll, setUserAll] = useState(null);
+
     useEffect(() => {
         data.getUserAll()
         .then((users) => {
-            console.log(users[0]);
-            
+            setUserAll(users);
         })
         .catch((err) => {
             console.log(err.message);
         });
     }, []);
+
+    const rows = [];
+    
+    if(userAll !== null){
+        userAll.forEach( (user) => {
+            console.log('Lista Usuários ', user )
+
+            rows.push(
+                <UserRow 
+                    user = {user}
+                    key = {user.id}
+                />
+            )
+        } )
+
+    }
 
     return(
         <div className={styles.container}>
@@ -29,89 +78,7 @@ export default function Leaderboard(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div>
-                                <img src="https://github.com/camiladev.png" alt="{userName}"/>
-                                <div>
-                                    <strong>Camila Matos</strong>
-                                    <p>
-                                        <img src="icons/level.svg" alt="icone level"/>
-                                        Level 1
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>
-                                <span>5</span> completados
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                <span>15400</span> xp
-                            </p>
-                        </td>
-                    </tr>
-
-                    {/* nova linha */}
-
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            
-                            <div>
-                                <img src="https://github.com/camiladev.png" alt="{userName}"/>
-                                <div>
-                                    <strong>Camila Matos</strong>
-                                    <p>
-                                        <img src="icons/level.svg" alt="icone level"/>
-                                        Level 1
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>
-                                <span>5</span> completados
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                <span>15400</span> xp
-                            </p>
-                        </td>
-                    </tr>
-
-                    {/* nova linha */}
-
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            
-                            <div>
-                                <img src="https://github.com/camiladev.png" alt="{userName}"/>
-                                <div>
-                                    <strong>Camila Matos</strong>
-                                    <p>
-                                        <img src="icons/level.svg" alt="icone level"/>
-                                        Level 1
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>
-                                <span>5</span> completados
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                <span>15400</span> xp
-                            </p>
-                        </td>
-                    </tr>
+                    {rows}
                 </tbody>
             </table>
         </div>
