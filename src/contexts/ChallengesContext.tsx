@@ -30,6 +30,7 @@ interface ChallengesProviderProps {
     level: number;
     currentExperience: number;
     challengesCompleted: number;
+    xp: number;
 }
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
@@ -41,7 +42,7 @@ export function ChallengesProvider({
     const [level, setLevel] = useState(rest.level ?? 1);
     const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
     const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
-    const [sumXp, setSumXp] = useState(0)
+    const [sumXp, setSumXp] = useState(rest.xp ?? 0)
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
@@ -73,6 +74,7 @@ export function ChallengesProvider({
 
     //Salva os dados da sessão do usuário
     useEffect(() => {
+        Cookie.set('xp', String(sumXp));
         Cookie.set('level', String(level));
         Cookie.set('currentExperience', String(currentExperience));
         Cookie.set('challengesCompleted', String(challengesCompleted));
@@ -101,6 +103,7 @@ export function ChallengesProvider({
     }, [level,
         currentExperience,
         challengesCompleted,
+        sumXp,
         ]);
 
     function levelUp(){
@@ -139,7 +142,8 @@ export function ChallengesProvider({
         const { amount } = activeChallenge;
 
         let finalExperience = currentExperience + amount;
-        setSumXp(finalExperience);
+        setSumXp(sumXp + amount);
+
         if(finalExperience >= experienceToNextLevel){
             finalExperience = finalExperience - experienceToNextLevel;
             levelUp();

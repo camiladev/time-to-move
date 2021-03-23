@@ -4,11 +4,12 @@ import data from  '../repositories/user-tm'
 import { useEffect, useState } from 'react';
 
 
-function UserRow({user}){
+function UserRow({user, ranking}){
     console.log('Usuários Linha ', user )
+
     return(
         <tr>
-            <td>1</td>
+            <td>{ranking}</td>
                 <td>
                     <div>
                         <img src={user.avatar} alt={user.name}/>
@@ -42,6 +43,9 @@ export default function Leaderboard(){
     useEffect(() => {
         data.getUserAll()
         .then((users) => {
+            users.sort( (a , b) => {
+                return a.xp < b.xp
+            })
             setUserAll(users);
         })
         .catch((err) => {
@@ -50,15 +54,16 @@ export default function Leaderboard(){
     }, []);
 
     const rows = [];
-    
+    var ranking = 0;
     if(userAll !== null){
         userAll.forEach( (user) => {
             console.log('Lista Usuários ', user )
-
+            ranking = ranking + 1
             rows.push(
                 <UserRow 
                     user = {user}
                     key = {user.id}
+                    ranking = {ranking}
                 />
             )
         } )

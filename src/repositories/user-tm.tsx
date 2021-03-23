@@ -61,22 +61,3 @@ export default{
     getOneUser
 };
 
-
-//****Só para base */
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const res = await fetch('http://localhost:8080/TimeToMove').then( async (response) => {
-//     if(response.ok){
-//         const users = await response.json();
-//         console.log("Resposta users ", users.name);
-//         return users;
-//     }
-
-//     throw new Error("Não foi possivel conectar ao servidor")
-// })
-//   // const users = await res.json()
-//     console.log('data ', res[0].name)
-//     // console.log('data ', users)
-//   return{
-//     props: {}
-//   }
-// }
