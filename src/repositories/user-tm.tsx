@@ -6,7 +6,7 @@ function getUserAll(){
     return fetch(`${URL_DATA}`).then( async (response) => {
         if(response.ok){
             const users = await response.json();
-            console.log("Resposta users ", users);
+           
             return users;
         }
 
@@ -25,7 +25,7 @@ function getOneUser(user){
 }
 
 function create(user){
-    console.log('create -> ', user.username)
+    
     return fetch(`${URL_DATA}`, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },

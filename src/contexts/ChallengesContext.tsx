@@ -56,7 +56,6 @@ export function ChallengesProvider({
 
     useEffect( () => {
         Repositores.getOneUser(idUserRegistered).then( (user) => {
-            console.log('User dados ', user.name)
             setUserOn(user);
             setLevel(user.level);
             setCurrentExperience(user.currentXp);

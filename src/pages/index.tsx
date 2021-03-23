@@ -1,11 +1,9 @@
 import { GetServerSideProps } from 'next';
-import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
-import Repositores from '../repositories/user-tm';
-
  
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import HomePage from './home';
+import data from '../services/data';
+const URL_DATA = `${data.URL_BACKEND_TOP}/TimeToMove`;
 
 
 interface IndexProps {
@@ -13,10 +11,6 @@ interface IndexProps {
   currentExperience: number;
   challengesCompleted: number;
   isLogged: boolean;
-  usernameSign: string;
-  userName: string;
-  imgUser: string;
-  nameFull: string;
   xp: number;
 }
 
@@ -44,14 +38,9 @@ export const getServerSideProps:GetServerSideProps = async (ctx) => {
           challengesCompleted,
           xp,          
         } = ctx.req.cookies;
-  // const { idUserRegistered } = useContext(AuthContext);
-
-  // Repositores.getOneUser(idUserRegistered).then( (user) => {
-  //   console.log(user)
-  // }).catch(() => {})
-  // const { props } = ctx.query
-  //       console.log('props', props)
-  //   console.log("Experiencia inicial",currentExperience )
+  const res = await fetch(`${URL_DATA}`);
+  const json = await res.json();
+ console.log(json)
   return{
     props: {
      

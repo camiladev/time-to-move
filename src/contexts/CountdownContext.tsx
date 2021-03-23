@@ -23,7 +23,7 @@ let contX: number = 0;
 
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-    const startTime = 0.1 * 60;//retorna o valor em segundos de 25 minutos
+    const startTime = 25 * 60;//retorna o valor em segundos de 25 minutos
     const {startNewChallenge } = useContext(ChallengesContext);
     const [time, setTime] = useState(startTime); //retorna o valor em segundos de 25 minutos
     const [isActive, setIsActive] = useState(false);
@@ -37,7 +37,6 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     
     function progressBarButton(){
         const calcX = (100*contX)/startTime;
-        // console.log('calcX ', calcX,'%');
         setProgressCycle(calcX);
     }
 
@@ -60,7 +59,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
             countdownTimeout = setTimeout(() => {
                 setTime(time - 1)
                 contX = contX + 1;
-                // console.log('contX ', contX);
+                
                 progressBarButton();
             }, 1000)
         }else if(isActive && time === 0){

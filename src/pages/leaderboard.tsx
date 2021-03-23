@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 
 function UserRow({user, ranking}){
-    console.log('Usuários Linha ', user )
 
     return(
         <tr>
@@ -57,7 +56,7 @@ export default function Leaderboard(){
     var ranking = 0;
     if(userAll !== null){
         userAll.forEach( (user) => {
-            console.log('Lista Usuários ', user )
+            
             ranking = ranking + 1
             rows.push(
                 <UserRow 

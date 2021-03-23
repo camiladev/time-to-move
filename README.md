@@ -41,6 +41,13 @@ Utilizei o axios para fazer a requisição no servidor do github e retornar os d
 
 Optei por realizar desta forma pois não estou fazendo a estrutura de backend.
 
+**Ranking**
+Para listar o ranking dos usuários alguns dados são salvos na api da aplicação salvos em outro projeto privado.
+
+Para consultar utilizei fecth para consultar os dados na api fake em json.
+
+Os usuários são listados em ordem decrescente de valor total de xp.
+
 **Responsividade**
 :hourglass_flowing_sand: Em construção
 
@@ -55,6 +62,7 @@ Optei por realizar desta forma pois não estou fazendo a estrutura de backend.
 - HTML5
 - Biblioteca Js-Cookies
 - Biblioteca React-Icons
+- API Rest Json Server
 
 ### :computer: Execução
 
