@@ -1,4 +1,6 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import {firebaseAuth} from "../config/firebase/firebaseAuth"
 
 import { Login } from "../components/Login";
 import { useRouter } from "next/router";
@@ -35,6 +37,8 @@ export const AuthContext = createContext({} as AuthContextData);
 
 
 export function AuthProvider( {children }:AuthProviderProps ){
+    const [authUser, isAuthLoading, authErro] = useAuthState(firebaseAuth)
+
     const [userName, setUserName] = useState('');
     const [nameFull, setNameFull] = useState('');
     const [imgUser, setImgUser] = useState('');
