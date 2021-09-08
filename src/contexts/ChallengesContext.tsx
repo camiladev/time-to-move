@@ -5,7 +5,6 @@ import { LevelUpModal } from "../components/LevelUpModal";
 import { AuthContext } from "./AuthContext";
 import Repositores from '../repositories/user-tm';
 
-
 interface Challenge{
     type: 'body' | 'eye';
     description: string;
@@ -46,24 +45,17 @@ export function ChallengesProvider({
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
-    const [userOn, setUserOn] = useState(null);
-    
+    const [userOn, setUserOn] = useState(null);    
     
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
     
-    const { idUserRegistered } = useContext(AuthContext);
-
+    const { userRegistered } = useContext(AuthContext);
 
     useEffect( () => {
-        Repositores.getOneUser(idUserRegistered).then( (user) => {
-            setUserOn(user);
-            setLevel(user.level);
-            setCurrentExperience(user.currentXp);
-            setChallengesCompleted(user.challengesCompleted);
-
-        } ).catch( error => {
-            console.log('Erro ao buscar dados! ', error)
-        })
+        setUserOn(userRegistered);
+        setLevel(userRegistered.level);
+        setCurrentExperience(userRegistered.currentXp);
+        setChallengesCompleted(userRegistered.challengesCompleted);
     } ,[]);
 
     //Pedir autorização para mostrar notificação
@@ -151,9 +143,7 @@ export function ChallengesProvider({
         setCurrentExperience(finalExperience);
         setActiveChallenge(null);
         setChallengesCompleted(challengesCompleted + 1);
-    }
-
-    
+    }    
 
     return(
         <ChallengesContext.Provider value={{
@@ -170,7 +160,6 @@ export function ChallengesProvider({
         }}>
             
             { children }
-            
             
             { isLevelUpModalOpen && <LevelUpModal /> }
         </ChallengesContext.Provider>

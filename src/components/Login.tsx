@@ -1,13 +1,14 @@
 import style from '../styles/components/Login.module.css';
 
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
+import {AiFillGoogleCircle} from 'react-icons/ai'
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import Head from 'next/head';
 
 
 export function Login(){
-    const {userName, handleInput, handleSubmitSignIn} = useContext(AuthContext);
+    const {userName, handleInput, handleSubmitSignIn, handleSubmitWithGoogle } = useContext(AuthContext);
 
     return(
         <div className={style.loginContainer}>
@@ -29,20 +30,25 @@ export function Login(){
                         <strong>Bem-vindo</strong>
                         <p>
                         <FaGithub /> 
-                            Faça login com seu Github para começar
+                            Faça login para começar
                         </p>
                         <div className={style.form}>
                             <input 
                                 type="text" 
                                 value={userName}
                                 onChange={handleInput}
-                                placeholder="Digite seu username"
+                                placeholder="Username do GitHub"
                             />
                             <button 
                                 type="button"
                                 onClick={handleSubmitSignIn}
                             >
                                 <FaArrowRight />
+                            </button>
+                            <button type="button"
+                                  onClick={handleSubmitWithGoogle}
+                            >
+                                <AiFillGoogleCircle />
                             </button>
 
                         </div>

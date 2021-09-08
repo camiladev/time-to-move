@@ -1,6 +1,6 @@
-import firebase from "firebase/app";
-import "firebase/firebase-auth";
-import "firebase/firebase-firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth/";
+import "firebase/compat/firestore";
 
 import config from "./configFirebase"
 
@@ -11,7 +11,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
 export default {
   googleLogIn: async () => {
     provider.setCustomParameters({ prompt: "select_account" });
-    const result = await firebaseAuth.signInWithPopup(provider);
+    const result = await firebaseAuth.signInWithPopup(provider)
 
     return result;
   },

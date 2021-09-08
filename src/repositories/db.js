@@ -1,21 +1,25 @@
-import firebase from "../config/firebase/firebaseDB"
+import firebaseDB from "../config/firebase/firebaseDB";
 
-const db = firebase.ref("/users")
+const db = firebaseDB.collection("/users_time_to_move")
 
 const getAll = () => {
     return db
 }
 
+// const getOneUser = (name) => {
+//     return db.orderByChild('name').equalTo(name)
+// }
+
 const createUser = (data) => {
-    return db.push(data)
+    return db.add(data)
 }
 
 const updateUser = (key, data) => {
-    return db.child(key).update(data)
+    return db.doc(key).update(data)
 }
 
 const removeUser = (key) => {
-    return db.child(key).remove()
+    return db.doc(key).remove()
 }
 
 export default {

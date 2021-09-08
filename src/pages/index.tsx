@@ -1,10 +1,8 @@
-import { GetServerSideProps } from 'next';
- 
+import { GetServerSideProps } from 'next'; 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import HomePage from './home';
 import data from '../services/data';
 const URL_DATA = `${data.URL_BACKEND_TOP}/TimeToMove`;
-
 
 interface IndexProps {
   level: number;
@@ -30,7 +28,6 @@ export default function Home(props: IndexProps) {
 
   )
 }
-
 
 export const getServerSideProps:GetServerSideProps = async (ctx) => {
   const { level,

@@ -1,24 +1,33 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {firebaseAuth} from "../config/firebase/firebaseAuth"
+import authFirebase, {firebaseAuth} from "../config/firebase/firebaseAuth"
 
 import { Login } from "../components/Login";
 import { useRouter } from "next/router";
 import getUsers from "../repositories/user";
-
 import Repositores from '../repositories/user-tm';
+import db from '../repositories/db'
 
-
+interface DataUser {
+    id: number,
+    name: string,
+    avatar: string,
+    level: number,
+    xp: number,
+    currentXp: number,
+    challengesCompleted: number,
+}
 
 interface AuthContextData{
     userName: string;
     nameFull: string;
     imgUser: string;
     isLogged: boolean;
-    idUserRegistered: number;
+    userRegistered: DataUser;
     handleInput(value: React.ChangeEvent<HTMLInputElement>): void;
     handleSubmitSignIn: () => void;
     logOut: () => void;
+    handleSubmitWithGoogle: () => void;
 }
 
 interface ValueData{
@@ -32,34 +41,89 @@ interface AuthProviderProps {
     
 }
 
-
 export const AuthContext = createContext({} as AuthContextData);
-
 
 export function AuthProvider( {children }:AuthProviderProps ){
     const [authUser, isAuthLoading, authErro] = useAuthState(firebaseAuth)
 
+    const [userLoggedIn, setUserLoggedIn] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [rankingUser, setRankingUser] = useState(null);
+    
     const [userName, setUserName] = useState('');
     const [nameFull, setNameFull] = useState('');
     const [imgUser, setImgUser] = useState('');
 
-    const [idUserRegistered, setIdUserRegistered] = useState(0);
+    const [userRegistered, setUserRegistered] = useState(null);
 
     const [isLogged, setIsLogged] = useState(false);
 
     const router = useRouter();
 
+    const isFirebaseLoggedIn = !isAuthLoading && !authErro;
+    const isAuthenticated = isFirebaseLoggedIn && userLoggedIn;
 
-    function createUser(newUser){
-        Repositores.create({
-            username: userName,
+    useEffect(() => {
+        let ranking = [];
+
+        db.getAll().onSnapshot( items => {
+            items.docs.forEach((item) => {
+                let data = item.data()                
+                ranking.push(data)               
+            })
+        })
+        setRankingUser(ranking)
+
+        if (isFirebaseLoggedIn && !userLoggedIn) {
+            console.log("user ", authUser?.displayName);
+            setUserLoggedIn(authUser)
+        }
+        if (isAuthenticated && !userRegistered) {
+            findUser(userLoggedIn.displayName) 
+        }
+        if (!isAuthLoading) {
+            setIsLoading(false)
+        }
+    },[authUser, isAuthLoading, isFirebaseLoggedIn, userLoggedIn])
+
+    function creteUser(newUser, id){
+        console.log("userLogado ", newUser);
+        
+        const data = {
+            id: id,
+            name: newUser.displayName,
+            avatar: newUser.photoURL,
+            level: 1,
+            xp: 0,
+            currentXp: 0,
+            challengesCompleted: 0,
+        }
+
+        db.createUser(data)
+        .then( resp => {
+            console.log("resposta create",resp);
+            setUserRegistered(data)
+            setIsLogged(true) 
+        })
+        .catch( e => {
+            console.log("erro -> ",e);
+            
+        })
+
+    }
+
+    function createUserByGitHub(newUser, id){
+
+        const data = {
+            id: id,
             name: newUser.name,
             avatar: newUser.avatar_url,
             level: 1,
             xp: 0,
             currentXp: 0,
             challengesCompleted: 0,
-        }).then( () => {
+        }
+        Repositores.create(data).then( () => {
             console.log('Novo usuário registrado com sucesso')
             setIsLogged(true) 
         }).catch( err => {
@@ -67,42 +131,25 @@ export function AuthProvider( {children }:AuthProviderProps ){
         })
     }
 
-    function findUser(userGit){
-        let isRegistered = false;
-        const response = Repositores.getUserAll().then( (users) => {
-            if(users.length === 0){
-                setIdUserRegistered(1)
-                createUser(userGit);  
-                return;
-            }
-            const ultimo = users.slice(-1)[0];
-
-            const userFind = users.find( (user) => {
-                
-                const register = userName === user.username;
-                isRegistered = register;
-                setIdUserRegistered(user.id);   
-                
-                return register;
-            } );
-            console.log('userFind ',userFind, 'isRegistered', isRegistered)
-            if(isRegistered === true ){
-                
-                setIsLogged(true)       
-    
-            }else{
-                
-                setIdUserRegistered(ultimo.id+1)
-                createUser(userGit);    
-            }    
-        }).catch( (err) => {
-            console.log(err) 
+    function findUser(nameUser){        
+        console.log("ranking ", rankingUser);
+        //consulta se usuário está cadastrado
+        const findUser = rankingUser.find( user => {
+            const register = user.name === nameUser
+            setUserRegistered(user)
+            setIsLogged(true) 
+            return register
         })
-           
-                         
-       
+        console.log("findUser aqui ", findUser);   
+
+        //se não estiver
+        if(!findUser){
+            const ultimoId = rankingUser.slice(-1)[0];
+            creteUser(userLoggedIn, ultimoId.id + 1 )
+            console.log("User não cadastrado - id ", ultimoId.id + 1);
+        }
+
     }
- 
 
     function handleInput(value: React.ChangeEvent<HTMLInputElement>): void{
         const user = value.currentTarget.value;
@@ -110,14 +157,14 @@ export function AuthProvider( {children }:AuthProviderProps ){
 
     }
 
-    async function handleSubmitSignIn(){
+    async function handleSubmitSignIn(){      
         
         try{
-            const response:ValueData = await getUsers(userName);
+            const response:ValueData = await getUsers(userName);         
                         
             setNameFull(response.name);
             setImgUser(response.avatar_url);
-            findUser(response);             
+            findUser(response.name);             
             
         }catch(error){
             alert("Usuário não localizado!!")
@@ -125,7 +172,13 @@ export function AuthProvider( {children }:AuthProviderProps ){
         
     }
 
-    function logOut(){
+    async function handleSubmitWithGoogle() {
+        await authFirebase.googleLogIn();
+    }
+
+    async function logOut(){
+        await authFirebase.googleLogOn();
+        setUserLoggedIn(null)
         setUserName('');
         router.push('/');
         setIsLogged(false);
@@ -137,15 +190,15 @@ export function AuthProvider( {children }:AuthProviderProps ){
             nameFull,
             imgUser,
             isLogged,
-            idUserRegistered,
+            userRegistered,
             handleInput,
             handleSubmitSignIn,
-            logOut
+            logOut,
+            handleSubmitWithGoogle
         }}>
             
             { isLogged ? children : <Login /> }
-
-            
+ 
         </AuthContext.Provider>
     )
 }
