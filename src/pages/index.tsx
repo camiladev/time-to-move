@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next'; 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import HomePage from './home';
-import data from '../services/data';
-const URL_DATA = `${data.URL_BACKEND_TOP}/TimeToMove`;
+import { UserProvider } from '../contexts/UserContext';
+
 
 interface IndexProps {
   level: number;
@@ -15,7 +15,7 @@ interface IndexProps {
 export default function Home(props: IndexProps) {
   
   return (
-
+    <UserProvider >
               <ChallengesProvider
                 level = {props.level}
                 currentExperience = {props.currentExperience}
@@ -25,6 +25,7 @@ export default function Home(props: IndexProps) {
                 <HomePage />
 
               </ChallengesProvider>  
+    </UserProvider>
 
   )
 }
@@ -35,9 +36,7 @@ export const getServerSideProps:GetServerSideProps = async (ctx) => {
           challengesCompleted,
           xp,          
         } = ctx.req.cookies;
-  const res = await fetch(`${URL_DATA}`);
-  const json = await res.json();
- console.log(json)
+  
   return{
     props: {
      

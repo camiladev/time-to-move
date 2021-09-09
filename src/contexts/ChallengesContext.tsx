@@ -4,6 +4,7 @@ import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
 import { AuthContext } from "./AuthContext";
 import Repositores from '../repositories/user-tm';
+import { useContextUser } from "./UserContext";
 
 interface Challenge{
     type: 'body' | 'eye';
@@ -49,7 +50,7 @@ export function ChallengesProvider({
     
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
     
-    const { userRegistered } = useContext(AuthContext);
+    const { userRegistered } = useContextUser();
 
     useEffect( () => {
         setUserOn(userRegistered);
@@ -80,7 +81,7 @@ export function ChallengesProvider({
                 xp: sumXp,
                 currentXp: currentExperience,
                 challengesCompleted: challengesCompleted,
-                id: idUserRegistered,
+                id: userOn.id,
             }).then( res => {
                 if(res.ok){
                     console.log('Dados Atualizado')
