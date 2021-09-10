@@ -2,7 +2,9 @@ import styles from '../styles/pages/Leaderboard.module.css'
 
 import data from  '../repositories/user-tm'
 import { useEffect, useState } from 'react';
-
+import { useContextUser } from '../contexts/UserContext';
+import loadConfig from 'next/dist/next-server/server/config';
+import db from '../repositories/db'
 
 function UserRow({user, ranking}){
 
@@ -38,23 +40,40 @@ function UserRow({user, ranking}){
 
 export default function Leaderboard(){
     const [userAll, setUserAll] = useState(null);
+    const { rankingUser } = useContextUser();
 
     useEffect(() => {
-        data.getUserAll()
-        .then((users) => {
-            users.sort( (a , b) => {
-                return a.xp < b.xp
+        console.log('Ranking - ', rankingUser);
+        let listUser = []
+        const lista = async () => {
+            await db.getAll().orderBy('xp', 'desc').onSnapshot( items => {
+                items.docs.forEach( (item) => {
+                    let data = item.data()                
+                      listUser.push(data)                       
+                })
             })
-            setUserAll(users);
-        })
-        .catch((err) => {
-            console.log(err.message);
-        });
+            if (listUser) {
+                setUserAll(listUser)
+            }
+            
+        }
+        lista();
+        // data.getUserAll()
+        // .then((users) => {
+        //     users.sort( (a , b) => {
+        //         return a.xp < b.xp
+        //     })
+        //     setUserAll(users);
+        // })
+        // .catch((err) => {
+        //     console.log(err.message);
+        // });
     }, []);
 
     const rows = [];
     var ranking = 0;
-    if(userAll !== null){
+    if(userAll){
+        console.log('userAll - ', userAll);
         userAll.forEach( (user) => {
             
             ranking = ranking + 1

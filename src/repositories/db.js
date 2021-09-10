@@ -6,24 +6,38 @@ const getAll = () => {
     return db
 }
 
-// const getOneUser = (name) => {
-//     return db.orderByChild('name').equalTo(name)
-// }
-
-const createUser = (data) => {
-    return db.add(data)
+const getOneUser = async (name) => {    
+    return await db.where('name', '==', name).get()
 }
 
-const updateUser = (key, data) => {
-    return db.doc(key).update(data)
+const createUser = async (data) => {
+    const resp = await db.add(data)
+    console.log('id ', resp.id);
+    return resp
 }
 
-const removeUser = (key) => {
-    return db.doc(key).remove()
+const updateUser = async (key, data) => {
+    let refUser;
+    const ref = (await db.where('id','==',key).get())
+    .docs.forEach( (item) => { 
+        refUser = item.id                  
+    })
+   
+   return db.doc(refUser).set(data)
+}
+
+const removeUser = async (key) => {
+    let refUser;
+    const ref = (await db.where('id','==',key).get())
+    .docs.forEach( (item) => { 
+        refUser = item.id                  
+    })
+    return db.doc(refUser).remove()
 }
 
 export default {
     getAll,
+    getOneUser,
     createUser,
     updateUser,
     removeUser

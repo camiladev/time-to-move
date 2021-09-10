@@ -10,9 +10,8 @@ import Repositores from '../repositories/user-tm';
 
 interface AuthContextData{
     userName: string;
-    nameFull: string;
-    imgUser: string;
     isLogged: boolean;
+    isLoading: boolean;
     userLoggedIn: ValueData;
     handleInput(value: React.ChangeEvent<HTMLInputElement>): void;
     handleSubmitSignIn: () => void;
@@ -23,6 +22,7 @@ interface AuthContextData{
 interface ValueData{
     avatar_url: string;
     name: string;
+    origin: string;
 }
 
 interface AuthProviderProps {
@@ -39,9 +39,6 @@ export function AuthProvider( {children }:AuthProviderProps ){
     const [isLoading, setIsLoading] = useState(true);
     
     const [userName, setUserName] = useState('');
-    const [nameFull, setNameFull] = useState('');
-    const [imgUser, setImgUser] = useState('');
-
 
     const [isLogged, setIsLogged] = useState(false);
 
@@ -52,11 +49,12 @@ export function AuthProvider( {children }:AuthProviderProps ){
 
     useEffect(() => {
 
-        if (isFirebaseLoggedIn && !userLoggedIn) {
-            console.log("user ", authUser?.displayName);
+        if (isFirebaseLoggedIn && !userLoggedIn && authUser) {
+            console.log("user ", authUser.displayName);
             setUserLoggedIn({
                 name: authUser.displayName,
                 avatar_url: authUser.photoURL,
+                origin: 'Firebase',
             })  
             setIsLogged(true); 
         }
@@ -68,17 +66,17 @@ export function AuthProvider( {children }:AuthProviderProps ){
     function handleInput(value: React.ChangeEvent<HTMLInputElement>): void{
         const user = value.currentTarget.value;
         setUserName(user)
-
     }
 
     async function handleSubmitSignIn(){      
         
         try{
-            const response:ValueData = await getUsers(userName); 
+            const response = await getUsers(userName); 
             
             setUserLoggedIn({
                 name: response.name,
                 avatar_url: response.avatar_url,
+                origin: 'Github',
             }) 
             setIsLogged(true);      
             
@@ -103,9 +101,8 @@ export function AuthProvider( {children }:AuthProviderProps ){
     return(
         <AuthContext.Provider value={{
             userName,
-            nameFull,
-            imgUser,
             isLogged,
+            isLoading,
             userLoggedIn,
             handleInput,
             handleSubmitSignIn,

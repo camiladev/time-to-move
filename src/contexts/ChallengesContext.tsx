@@ -5,6 +5,7 @@ import { LevelUpModal } from "../components/LevelUpModal";
 import { AuthContext } from "./AuthContext";
 import Repositores from '../repositories/user-tm';
 import { useContextUser } from "./UserContext";
+import db from '../repositories/db'
 
 interface Challenge{
     type: 'body' | 'eye';
@@ -53,11 +54,15 @@ export function ChallengesProvider({
     const { userRegistered } = useContextUser();
 
     useEffect( () => {
-        setUserOn(userRegistered);
-        setLevel(userRegistered.level);
-        setCurrentExperience(userRegistered.currentXp);
-        setChallengesCompleted(userRegistered.challengesCompleted);
-    } ,[]);
+        console.log('userRegistered - ',userRegistered);
+        if (userRegistered) {
+            setUserOn(userRegistered);
+            setLevel(userRegistered.level);
+            setCurrentExperience(userRegistered.currentXp);
+            setChallengesCompleted(userRegistered.challengesCompleted);
+            
+        }
+    } ,[userRegistered]);
 
     //Pedir autorização para mostrar notificação
     useEffect(() => {
@@ -70,33 +75,38 @@ export function ChallengesProvider({
         Cookie.set('level', String(level));
         Cookie.set('currentExperience', String(currentExperience));
         Cookie.set('challengesCompleted', String(challengesCompleted));
-        
-        if(userOn !== null){
-            console.log('userRegistered', userOn)
-            Repositores.update({
-                username: userOn.username,
+
+        if (userOn) {
+            const newStatus = {
+                id: userOn.id,
                 name: userOn.name,
                 avatar: userOn.avatar,
                 level: level,
                 xp: sumXp,
                 currentXp: currentExperience,
                 challengesCompleted: challengesCompleted,
-                id: userOn.id,
-            }).then( res => {
-                if(res.ok){
-                    console.log('Dados Atualizado')
-                }
-            } ).catch( error => {
-                console.log('Erro ao atualizar dados -> ', error)
-            })
-
+            }
+            updateUser(userOn.id, newStatus)
         }
+        
 
     }, [level,
         currentExperience,
         challengesCompleted,
         sumXp,
+        userOn,
         ]);
+
+    async function updateUser(id, data){
+        await db.updateUser(id, data)
+        .then( () => {
+            console.log('Dados atualizados');
+            
+        } )
+        .catch( e => {
+            console.log("erro -> ",e);               
+           })
+    }
 
     function levelUp(){
         setLevel(level + 1);

@@ -1,7 +1,9 @@
 import { GetServerSideProps } from 'next'; 
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import HomePage from './home';
-import { UserProvider } from '../contexts/UserContext';
+import { useContextUser, UserProvider } from '../contexts/UserContext';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 
 interface IndexProps {
@@ -13,8 +15,11 @@ interface IndexProps {
 }
 
 export default function Home(props: IndexProps) {
+  const {isLoading} = useContext(AuthContext)
   
-  return (
+  return isLoading ? (
+    <div>Carrengando dados ;)</div>
+  ) : (
     <UserProvider >
               <ChallengesProvider
                 level = {props.level}
