@@ -1,14 +1,16 @@
 import Layout from '../components/Layout'
 import { AuthProvider } from '../contexts/AuthContext'
+import { ControllerProvider } from '../contexts/ControllerContext'
 import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
   return (    
     <AuthProvider>
-      <Layout>
-        <Component {...pageProps} />   
-      </Layout>
-
+      <ControllerProvider>
+        <Layout>
+          <Component {...pageProps} />   
+        </Layout>
+      </ControllerProvider>
     </AuthProvider>
 
 

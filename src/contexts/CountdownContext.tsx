@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { ChallengesContext } from "./ChallengesContext";
+import { useController } from "./ControllerContext";
 
 interface CountdownContextData{
     isActive: boolean;
@@ -31,6 +32,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
 
     const [progressCycle, setProgressCycle] = useState(0);//recebe a porcentagem da barra de progresso
 
+    const { start } = useController();
     const minutes = Math.floor(time / 60); //retorna valor arredondado
     const seconds = time % 60; //retorna o resto da divisao, o que vem depois da virgula
     
@@ -42,6 +44,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
 
     function startCountdown(){
         setIsActive(true); 
+        start();
     }
 
     function resetCountdown(){
@@ -49,7 +52,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
         setIsActive(false);
         setTime(startTime);
         setHasFinished(false);
-
+        start();
         contX = 0;
         setProgressCycle(contX);
     }

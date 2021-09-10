@@ -2,8 +2,6 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import Cookie from 'js-cookie';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
-import { AuthContext } from "./AuthContext";
-import Repositores from '../repositories/user-tm';
 import { useContextUser } from "./UserContext";
 import db from '../repositories/db'
 
@@ -54,7 +52,7 @@ export function ChallengesProvider({
     const { userRegistered } = useContextUser();
 
     useEffect( () => {
-        console.log('userRegistered - ',userRegistered);
+       // console.log('userRegistered - ',userRegistered);
         if (userRegistered) {
             setUserOn(userRegistered);
             setLevel(userRegistered.level);

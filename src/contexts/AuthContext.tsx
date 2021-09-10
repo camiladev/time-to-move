@@ -5,7 +5,6 @@ import authFirebase, {firebaseAuth} from "../config/firebase/firebaseAuth"
 import { Login } from "../components/Login";
 import { useRouter } from "next/router";
 import getUsers from "../repositories/user";
-import Repositores from '../repositories/user-tm';
 
 
 interface AuthContextData{
@@ -50,7 +49,7 @@ export function AuthProvider( {children }:AuthProviderProps ){
     useEffect(() => {
 
         if (isFirebaseLoggedIn && !userLoggedIn && authUser) {
-            console.log("user ", authUser.displayName);
+            //console.log("user ", authUser.displayName);
             setUserLoggedIn({
                 name: authUser.displayName,
                 avatar_url: authUser.photoURL,

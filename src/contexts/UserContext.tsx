@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import db from '../repositories/db'
 
@@ -38,7 +38,7 @@ export function UserProvider( { children } ){
         lista();
                
         if (ranking) {
-            console.log('incluindo ranking ', ranking );
+            //console.log('incluindo ranking ', ranking );
             
             setRankingUser(ranking)     
             findUser(ranking)
@@ -53,11 +53,11 @@ export function UserProvider( { children } ){
                 isResgistrado = true
                 setUserRegistered(data)                        
         })
-        console.log("user registrado",isResgistrado ); 
-        console.log("rankingUser",ranking ); 
+       // console.log("user registrado",isResgistrado ); 
+       // console.log("rankingUser",ranking ); 
         if (!isResgistrado && ranking) {
             const ultimoId = ranking.slice(-1)[0]
-            console.log("user não cadastrado - ultimoId", ultimoId.id ); 
+            //console.log("user não cadastrado - ultimoId", ultimoId.id ); 
             creteUser(userLoggedIn, ultimoId.id + 1 )
         }
     }
@@ -65,7 +65,7 @@ export function UserProvider( { children } ){
     
 
     function creteUser(newUser, id){
-         console.log("userLogado ", newUser);
+        // console.log("userLogado ", newUser);
         
          const data = {
              id: id,
